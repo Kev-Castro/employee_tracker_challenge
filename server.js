@@ -34,7 +34,7 @@ function mainMenu() {
                 case 'VIEW_ALL_DEPARTMENTS':
                     renderDepartments();
                     break;
-                case 'VIEW_ALL_roles':
+                case 'VIEW_ALL_ROLES':
                     renderRoles();
                     break;
                 default:
