@@ -34,6 +34,9 @@ function mainMenu() {
                 case 'VIEW_ALL_DEPARTMENTS':
                     renderDepartments();
                     break;
+                case 'VIEW_ALL_roles':
+                    renderRoles();
+                    break;
                 default:
                     process.exit();
             }
@@ -46,6 +49,17 @@ function renderDepartments() {
             let departments = rows;
             console.log('\n');
             console.table(departments);
+        })
+        .then(() => {
+            mainMenu();
+        })
+}
+function renderRoles() {
+    db_wrapper.getAllRoles()
+        .then(([rows]) => {
+            let roles = rows;
+            console.log('\n');
+            console.table(roles);
         })
         .then(() => {
             mainMenu();
