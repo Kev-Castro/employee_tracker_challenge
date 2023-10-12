@@ -14,6 +14,10 @@ let questions = [
                 value: 'VIEW_ALL_DEPARTMENTS'
             },
             {
+                name: 'View all roles',
+                value: 'VIEW_ALL_ROLES'
+            },
+            {
                 name: 'Exit the program',
                 value: 'EXIT'
             }
