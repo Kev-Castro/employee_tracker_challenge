@@ -34,6 +34,10 @@ let questions = [
                 value: 'ADD_EMPLOYEE'
             },
             {
+                name: 'Update employee role',
+                value: 'UPDATE_EMPLOYEE_ROLE'
+            },
+            {
                 name: 'Exit the program',
                 value: 'EXIT'
             }
@@ -65,6 +69,10 @@ function mainMenu() {
                 case 'ADD_ROLE':
                     addRole();
                     break;
+                case 'UPDATE_EMPLOYEE_ROLE':
+                    updateEmployeeRole();
+                    break;
+
                 default:
                     process.exit();
             }
@@ -210,6 +218,62 @@ function addEmployee() {
                         })
                 });
         })
+}
+//got a bit lost and confused during the update employee role , used some help from doing research online
+function updateEmployeeRole() {
+    let employeeNames;
+    let roleNames;
+
+    db_wrapper.getAllEmployees()
+        .then(([employeeRows]) => {
+            employeeNames = employeeRows.map(employee => ({
+                name: `${employee.first_name} ${employee.last_name}`,
+                value: employee.id,
+            }));
+
+            db_wrapper.getAllRoles()
+                .then(([roleRows]) => {
+                    roleNames = roleRows.map(role => ({
+                        name: role.title,
+                        value: role.id,
+                    }));
+
+                    let updateEmployeeRoleQuestion = [
+                        {
+                            name: 'employee_id',
+                            type: 'list',
+                            message: 'Select the employee to update:',
+                            choices: employeeNames,
+                        },
+                        {
+                            name: 'new_role_id',
+                            type: 'list',
+                            message: 'Select the new role for the employee:',
+                            choices: roleNames,
+                        },
+                    ];
+
+                    inquirer.prompt(updateEmployeeRoleQuestion)
+                        .then(answer => {
+                            const { employee_id, new_role_id } = answer;
+
+                            // Call the updateEmployeeRole function to update the role in the database
+                            db_wrapper.updateEmployeeRole(employee_id, new_role_id)
+                                .then(() => {
+                                    console.log('Employee role updated successfully!');
+                                    mainMenu();
+                                })
+                                .catch(error => {
+                                    console.error('Error updating employee role:', error);
+                                    mainMenu();
+                                });
+                        });
+                });
+        })
+        .catch(error => {
+            console.error('Error fetching employee names and role names:', error);
+            mainMenu();
+        });
 }
 
 mainMenu();

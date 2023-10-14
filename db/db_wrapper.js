@@ -35,6 +35,14 @@ class db_wrapper {
             'INSERT INTO employee SET ?', name
         );
     }
+    updateEmployeeRole(employee_id, new_role_id) {
+        const sql = 'UPDATE employee SET role_id = ? WHERE id = ?';
+        const values = [new_role_id, employee_id];
+
+        return this.connection.promise().query(sql, values);
+    }
 }
 
 module.exports = new db_wrapper(connection);
+
+//got a bit lost and confused during the update employee role , used some help from doing research online
