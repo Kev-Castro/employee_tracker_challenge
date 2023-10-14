@@ -217,7 +217,7 @@ function addEmployee() {
                                 .then(() => mainMenu())
                         })
                 });
-        })
+        });
 }
 //got a bit lost and confused during the update employee role , used some help from doing research online
 function updateEmployeeRole() {
@@ -257,7 +257,6 @@ function updateEmployeeRole() {
                         .then(answer => {
                             const { employee_id, new_role_id } = answer;
 
-                            // Call the updateEmployeeRole function to update the role in the database
                             db_wrapper.updateEmployeeRole(employee_id, new_role_id)
                                 .then(() => {
                                     console.log('Employee role updated successfully!');
