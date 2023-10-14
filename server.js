@@ -18,6 +18,10 @@ let questions = [
                 value: 'VIEW_ALL_ROLES'
             },
             {
+                name: 'View all employees',
+                value: 'VIEW_ALL_EMPLOYEES'
+            },
+            {
                 name: 'Exit the program',
                 value: 'EXIT'
             }
@@ -36,6 +40,9 @@ function mainMenu() {
                     break;
                 case 'VIEW_ALL_ROLES':
                     renderRoles();
+                    break;
+                case 'VIEW_ALL_EMPLOYEES':
+                    renderEmployees();
                     break;
                 default:
                     process.exit();
@@ -60,6 +67,17 @@ function renderRoles() {
             let roles = rows;
             console.log('\n');
             console.table(roles);
+        })
+        .then(() => {
+            mainMenu();
+        })
+}
+function renderEmployees() {
+    db_wrapper.getAllEmployees()
+        .then(([rows]) => {
+            let employees = rows;
+            console.log('\n');
+            console.table(employees);
         })
         .then(() => {
             mainMenu();
