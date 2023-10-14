@@ -25,6 +25,11 @@ class db_wrapper {
             'INSERT INTO department SET ?', name
         );
     }
+    addRole(name) {
+        return this.connection.promise().query(
+            'INSERT INTO department SET ?', name
+        );
+    }
 }
 
 module.exports = new db_wrapper(connection);

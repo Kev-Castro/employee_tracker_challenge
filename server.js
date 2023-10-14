@@ -51,6 +51,9 @@ function mainMenu() {
                 case 'ADD_DEPARTMENT':
                     addDepartment();
                     break;
+                case 'ADD_ROLE':
+                    addRole();
+                    break;
                 default:
                     process.exit();
             }
@@ -108,6 +111,42 @@ function addDepartment() {
                 })
                 .then(() => {
                     mainMenu();
+                })
+        })
+}
+
+
+function addRole() {
+    let departmentNames;
+    db_wrapper.getAllDepartments()
+        .then(([rows]) => {
+            departmentNames = rows;
+            let departmentChoices = departments.map(({ id, name }) => ({
+                name: name,
+                value: id
+            }))
+            let addRoleQuestion = [
+                {
+                    name: 'title',
+                    message: 'Give your role a title.'
+                },
+                {
+                    name: 'salary',
+                    message: 'Add salary for this title.'
+                },
+                {
+                    name: 'department_id',
+                    type: 'list',
+                    message: 'In what department does this role belong to?',
+                    choices: departmentChoices
+                },
+
+            ];
+            inquirer.prompt(addRoleQuestion)
+                .then(role => {
+                    db_wrapper.addRole(role)
+                        .then(() => console.log('successfully added role!'))
+                        .then(() => mainMenu())
                 })
         })
 }
