@@ -22,6 +22,10 @@ let questions = [
                 value: 'VIEW_ALL_EMPLOYEES'
             },
             {
+                name: 'Add department',
+                value: 'ADD_DEPARTMENT'
+            },
+            {
                 name: 'Exit the program',
                 value: 'EXIT'
             }
@@ -43,6 +47,9 @@ function mainMenu() {
                     break;
                 case 'VIEW_ALL_EMPLOYEES':
                     renderEmployees();
+                    break;
+                case 'ADD_DEPARTMENT':
+                    addDepartment();
                     break;
                 default:
                     process.exit();
@@ -81,6 +88,27 @@ function renderEmployees() {
         })
         .then(() => {
             mainMenu();
+        })
+}
+
+addDepartmentQuestion = [
+    {
+        name: 'name',
+        message: 'Give your department a name.'
+    }
+]
+
+function addDepartment() {
+    inquirer.prompt(addDepartmentQuestion)
+        .then(answer => {
+            let name = answer;
+            db_wrapper.addDepartment(name)
+                .then(() => {
+                    console.log('department created successfully')
+                })
+                .then(() => {
+                    mainMenu();
+                })
         })
 }
 
