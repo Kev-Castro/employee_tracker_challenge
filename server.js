@@ -14,16 +14,20 @@ let questions = [
                 value: 'VIEW_ALL_DEPARTMENTS'
             },
             {
+                name: 'Add department',
+                value: 'ADD_DEPARTMENT'
+            },
+            {
                 name: 'View all roles',
                 value: 'VIEW_ALL_ROLES'
             },
             {
-                name: 'View all employees',
-                value: 'VIEW_ALL_EMPLOYEES'
+                name: 'Add role',
+                value: 'ADD_ROLE'
             },
             {
-                name: 'Add department',
-                value: 'ADD_DEPARTMENT'
+                name: 'View all employees',
+                value: 'VIEW_ALL_EMPLOYEES'
             },
             {
                 name: 'Exit the program',
