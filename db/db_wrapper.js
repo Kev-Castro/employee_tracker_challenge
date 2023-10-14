@@ -30,6 +30,11 @@ class db_wrapper {
             'INSERT INTO role SET ?', name
         );
     }
+    addEmployee(name) {
+        return this.connection.promise().query(
+            'INSERT INTO employee SET ?', name
+        );
+    }
 }
 
 module.exports = new db_wrapper(connection);

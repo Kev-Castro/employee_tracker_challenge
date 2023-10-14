@@ -30,6 +30,10 @@ let questions = [
                 value: 'VIEW_ALL_EMPLOYEES'
             },
             {
+                name: 'Add employee',
+                value: 'ADD_EMPLOYEE'
+            },
+            {
                 name: 'Exit the program',
                 value: 'EXIT'
             }
@@ -51,6 +55,9 @@ function mainMenu() {
                     break;
                 case 'VIEW_ALL_EMPLOYEES':
                     renderEmployees();
+                    break;
+                case 'ADD_EMPLOYEE':
+                    addEmployee();
                     break;
                 case 'ADD_DEPARTMENT':
                     addDepartment();
@@ -152,6 +159,56 @@ function addRole() {
                         .then(() => console.log('successfully added role!'))
                         .then(() => mainMenu())
                 })
+        })
+}
+function addEmployee() {
+    let roleNames;
+    let employeeNames;
+    db_wrapper.getAllRoles()
+        .then(([rows]) => {
+            roleNames = rows;
+            let roleChoices = roleNames.map(({ id, title }) => ({
+                name: title,
+                value: id
+            }))
+            db_wrapper.getAllEmployees()
+                .then(([rows]) => {
+                    employeeNames = rows;
+                    let managerList = employeeNames.map(({ id, first_name, last_name }) => ({
+                        name: `${first_name} ${last_name}`,
+                        value: id
+                    }))
+                    managerList.unshift({ name: 'None', value: null });
+                    let addEmployeeQuestion = [
+                        {
+                            name: 'first_name',
+                            message: 'What is their first name?'
+                        },
+                        {
+                            name: 'last_name',
+                            message: 'What is their last name?'
+                        },
+                        {
+                            name: 'role_id',
+                            type: 'list',
+                            message: 'what role are they performing',
+                            choices: roleChoices
+                        },
+                        {
+                            name: 'manager_id',
+                            type: 'list',
+                            message: 'Who is their manager?',
+                            choices: managerList
+                        },
+
+                    ];
+                    inquirer.prompt(addEmployeeQuestion)
+                        .then(employee => {
+                            db_wrapper.addEmployee(employee)
+                                .then(() => console.log('successfully added employee!'))
+                                .then(() => mainMenu())
+                        })
+                });
         })
 }
 
