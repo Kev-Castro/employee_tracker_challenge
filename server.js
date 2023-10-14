@@ -125,7 +125,7 @@ function addRole() {
     db_wrapper.getAllDepartments()
         .then(([rows]) => {
             departmentNames = rows;
-            let departmentChoices = departments.map(({ id, name }) => ({
+            let departmentChoices = departmentNames.map(({ id, name }) => ({
                 name: name,
                 value: id
             }))

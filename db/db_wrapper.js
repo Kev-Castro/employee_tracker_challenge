@@ -27,7 +27,7 @@ class db_wrapper {
     }
     addRole(name) {
         return this.connection.promise().query(
-            'INSERT INTO department SET ?', name
+            'INSERT INTO role SET ?', name
         );
     }
 }
